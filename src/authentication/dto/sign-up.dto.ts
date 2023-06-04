@@ -3,5 +3,5 @@ export class SignUpDTO {
   password: string;
   location: string;
   name: string;
-  'g-recaptcha-response': string;
+  "g-recaptcha-response": string;
 }

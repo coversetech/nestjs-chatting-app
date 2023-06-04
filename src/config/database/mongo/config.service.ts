@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 /**
  * Service dealing with mongo config based operations.
  *
@@ -10,18 +10,18 @@ export class MongoConfigService {
   constructor(private configService: ConfigService) {}
 
   get database(): string {
-    return this.configService.get<string>('mongo.database');
+    return this.configService.get<string>("mongo.database");
   }
   get password(): string {
-    return this.configService.get<string>('mongo.password');
+    return this.configService.get<string>("mongo.password");
   }
   get username(): string {
-    return this.configService.get<string>('mongo.username');
+    return this.configService.get<string>("mongo.username");
   }
   get port(): string {
-    return this.configService.get<string>('mongo.port');
+    return this.configService.get<string>("mongo.port");
   }
   get host(): string {
-    return this.configService.get<string>('mongo.host');
+    return this.configService.get<string>("mongo.host");
   }
 }

@@ -1,15 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { LogClass } from 'src/common/decorators/log-class.decorator';
-import { MessagesRepository } from './messages.repository';
-import { HttpService } from '@nestjs/axios';
+import { Injectable } from "@nestjs/common";
+import { LogClass } from "src/common/decorators/log-class.decorator";
+import { MessagesRepository } from "./messages.repository";
 
 @Injectable()
 @LogClass()
 export class MessagesService {
-  constructor(
-    private readonly messagesRepository: MessagesRepository,
-    private readonly httpService: HttpService,
-  ) {}
+  constructor(private readonly messagesRepository: MessagesRepository) {}
 
   /* All Message Delete */
   async allMessageDelete(id: string, uid: string) {
@@ -34,7 +30,7 @@ export class MessagesService {
   async lastMsg(userId: string, receiverId: string) {
     const contactList = await this.messagesRepository.findTheLastMessage(
       userId,
-      receiverId,
+      receiverId
     );
     return contactList;
   }
@@ -44,7 +40,7 @@ export class MessagesService {
     const message = await this.messagesRepository.searchMessagesData(
       name,
       userId,
-      receiverId,
+      receiverId
     );
     return message;
   }
@@ -53,7 +49,7 @@ export class MessagesService {
   async sendUnreadMsg(receiver_id: string) {
     const message = await this.messagesRepository.find({
       receiver_id: receiver_id,
-      unread: '0',
+      unread: "0",
     });
     return message;
   }
@@ -71,7 +67,7 @@ export class MessagesService {
       {
         message,
         flag,
-      },
+      }
     );
     return messageUpdate;
   }
@@ -86,7 +82,7 @@ export class MessagesService {
   async updateUnreadMsg(receiver_Id: string, unread: number) {
     const message_update = await this.messagesRepository.updateMany(
       { sender_id: receiver_Id },
-      { unread },
+      { unread }
     );
     return message_update;
   }
@@ -98,7 +94,7 @@ export class MessagesService {
       { id },
       {
         flag,
-      },
+      }
     );
     return message_delete;
   }

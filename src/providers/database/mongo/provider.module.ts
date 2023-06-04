@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule, MongooseModuleAsyncOptions } from '@nestjs/mongoose';
-import { MongoConfigModule } from 'src/config/database/mongo/config.module';
-import { MongoConfigService } from 'src/config/database/mongo/config.service';
-import { Contact } from 'src/models/contacts/entities/contact.entity';
-import { GroupMessage } from 'src/models/groups/entities/group-message.entity';
-import { GroupUser } from 'src/models/groups/entities/group-user.entity';
-import { Group } from 'src/models/groups/entities/group.entity';
-import { Message } from 'src/models/messages/entities/message.entity';
-import { User } from 'src/models/users/entities/user.entity';
+import { Module } from "@nestjs/common";
+import { MongooseModule, MongooseModuleAsyncOptions } from "@nestjs/mongoose";
+import { MongoConfigModule } from "src/config/database/mongo/config.module";
+import { MongoConfigService } from "src/config/database/mongo/config.service";
+import { Contact } from "src/models/contacts/entities/contact.entity";
+import { GroupMessage } from "src/models/groups/entities/group-message.entity";
+import { GroupUser } from "src/models/groups/entities/group-user.entity";
+import { Group } from "src/models/groups/entities/group.entity";
+import { Message } from "src/models/messages/entities/message.entity";
+import { User } from "src/models/users/entities/user.entity";
 
 /**
  * Import and provide base mongoose (mongodb) related classes.
@@ -19,7 +19,7 @@ import { User } from 'src/models/users/entities/user.entity';
     MongooseModule.forRootAsync({
       imports: [MongoConfigModule],
       useFactory: async (mongoConfigService: MongoConfigService) => ({
-        type: 'mongo',
+        type: "mongo",
         host: mongoConfigService.host,
         port: mongoConfigService.port,
         username: mongoConfigService.username,

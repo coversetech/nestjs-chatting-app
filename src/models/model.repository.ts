@@ -5,13 +5,13 @@ import {
   SaveOptions,
   UpdateQuery,
   UpdateWithAggregationPipeline,
-} from 'mongoose';
-import { Document } from 'mongoose';
+} from "mongoose";
+import { Document } from "mongoose";
 import {
   CreatedModel,
   RemovedModel,
   UpdatedModel,
-} from 'src/common/serializers/model.serializer';
+} from "src/common/serializers/model.serializer";
 
 export class ModelRepository<T extends Document> {
   constructor(private readonly model: Model<T>) {}
@@ -23,8 +23,8 @@ export class ModelRepository<T extends Document> {
     return {
       id: savedResult.id,
       created: !!savedResult.id,
-      createdBy: savedResult.get('createdBy'),
-      createdAt: savedResult.get('createdAt'),
+      createdBy: savedResult.get("createdBy"),
+      createdAt: savedResult.get("createdAt"),
     };
   }
 
@@ -48,7 +48,7 @@ export class ModelRepository<T extends Document> {
   async updateOne(
     filter: FilterQuery<T>,
     updated: UpdateWithAggregationPipeline | UpdateQuery<T>,
-    options?: QueryOptions,
+    options?: QueryOptions
   ): Promise<UpdatedModel> {
     return await this.model.updateOne(filter, updated, options);
   }
@@ -56,7 +56,7 @@ export class ModelRepository<T extends Document> {
   async updateMany(
     filter: FilterQuery<T>,
     updated: UpdateWithAggregationPipeline | UpdateQuery<T>,
-    options?: QueryOptions,
+    options?: QueryOptions
   ): Promise<UpdatedModel> {
     return await this.model.updateMany(filter, updated, options);
   }

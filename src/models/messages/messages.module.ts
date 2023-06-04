@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Message, MessageSchema } from './entities/message.entity';
-import { MessagesController } from './messages.controller';
-import { MessagesService } from './messages.service';
-import { MessagesRepository } from './messages.repository';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { Message, MessageSchema } from "./entities/message.entity";
+import { MessagesController } from "./messages.controller";
+import { MessagesService } from "./messages.service";
+import { MessagesRepository } from "./messages.repository";
 
 @Module({
   imports: [
@@ -11,5 +11,6 @@ import { MessagesRepository } from './messages.repository';
   ],
   controllers: [MessagesController],
   providers: [MessagesService, MessagesRepository],
+  exports: [MessagesService, MessagesRepository],
 })
 export class MessagesModule {}

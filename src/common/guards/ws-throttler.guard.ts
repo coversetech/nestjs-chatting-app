@@ -1,12 +1,12 @@
-import { Injectable, ExecutionContext } from '@nestjs/common';
-import { ThrottlerGuard, ThrottlerException } from '@nestjs/throttler';
+import { Injectable, ExecutionContext } from "@nestjs/common";
+import { ThrottlerGuard, ThrottlerException } from "@nestjs/throttler";
 
 @Injectable()
 export class WsThrottlerGuard extends ThrottlerGuard {
   async handleRequest(
     context: ExecutionContext,
     limit: number,
-    ttl: number,
+    ttl: number
   ): Promise<boolean> {
     const client = context.switchToWs().getClient();
     const ip = client._socket.remoteAddress;

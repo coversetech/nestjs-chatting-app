@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Message, MessageDocument } from './entities/message.entity';
-import { ModelRepository } from '../model.repository';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Message, MessageDocument } from "./entities/message.entity";
+import { ModelRepository } from "../model.repository";
 
 @Injectable()
 export class MessagesRepository extends ModelRepository<MessageDocument> {
   constructor(
-    @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
+    @InjectModel(Message.name) private messageModel: Model<MessageDocument>
   ) {
     super(messageModel);
   }
@@ -36,16 +36,16 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
     return await this.messageModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { senderId: '$sender_id' },
+          from: "users",
+          let: { senderId: "$sender_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$senderId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$senderId" }] },
               },
             },
           ],
-          as: 'matches',
+          as: "matches",
         },
       },
       {
@@ -60,19 +60,19 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
           ],
         },
       },
-      { $match: { message: { $regex: name, $options: 'i' } } },
+      { $match: { message: { $regex: name, $options: "i" } } },
       { $sort: { _id: -1 } },
       { $limit: 10 },
       {
         $project: {
-          message: '$message',
-          sender_id: '$sender_id',
-          receiver_id: '$receiver_id',
-          file_upload: '$file_upload',
-          createdAt: '$createdAt',
-          user_id: '$matches._id',
-          name: '$matches.name',
-          image: '$matches.image',
+          message: "$message",
+          sender_id: "$sender_id",
+          receiver_id: "$receiver_id",
+          file_upload: "$file_upload",
+          createdAt: "$createdAt",
+          user_id: "$matches._id",
+          name: "$matches.name",
+          image: "$matches.image",
         },
       },
     ]);
@@ -82,16 +82,16 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
     return await this.messageModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { senderId: '$sender_id' },
+          from: "users",
+          let: { senderId: "$sender_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$senderId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$senderId" }] },
               },
             },
           ],
-          as: 'matches',
+          as: "matches",
         },
       },
       {
@@ -101,14 +101,14 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
       },
       {
         $project: {
-          message: '$message',
-          sender_id: '$sender_id',
-          receiver_id: '$receiver_id',
-          file_upload: '$file_upload',
-          createdAt: '$createdAt',
-          user_id: '$matches._id',
-          name: '$matches.name',
-          image: '$matches.image',
+          message: "$message",
+          sender_id: "$sender_id",
+          receiver_id: "$receiver_id",
+          file_upload: "$file_upload",
+          createdAt: "$createdAt",
+          user_id: "$matches._id",
+          name: "$matches.name",
+          image: "$matches.image",
         },
       },
     ]);
@@ -118,31 +118,31 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
     return await this.messageModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { senderId: '$sender_id' },
+          from: "users",
+          let: { senderId: "$sender_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$senderId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$senderId" }] },
               },
             },
           ],
-          as: 'matches',
+          as: "matches",
         },
       },
       {
         $lookup: {
-          from: 'contacts',
-          let: { nsenderId: '$sender_id' },
+          from: "contacts",
+          let: { nsenderId: "$sender_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$user_id', '$$nsenderId'] },
+                $expr: { $eq: ["$user_id", "$$nsenderId"] },
               },
             },
             { $limit: 1 },
           ],
-          as: 'nmatches',
+          as: "nmatches",
         },
       },
       {
@@ -155,16 +155,16 @@ export class MessagesRepository extends ModelRepository<MessageDocument> {
       { $limit: 10 },
       {
         $project: {
-          message: '$message',
-          flag: '$flag',
-          sender_id: '$sender_id',
-          receiver_id: '$receiver_id',
-          file_upload: '$file_upload',
-          createdAt: '$createdAt',
-          updatedAt: '$updatedAt',
-          user_id: '$matches._id',
-          name: '$nmatches.name',
-          image: '$matches.image',
+          message: "$message",
+          flag: "$flag",
+          sender_id: "$sender_id",
+          receiver_id: "$receiver_id",
+          file_upload: "$file_upload",
+          createdAt: "$createdAt",
+          updatedAt: "$updatedAt",
+          user_id: "$matches._id",
+          name: "$nmatches.name",
+          image: "$matches.image",
         },
       },
     ]);

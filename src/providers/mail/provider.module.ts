@@ -1,7 +1,7 @@
-import { MailerModule } from '@nestjs-modules/mailer';
-import { Module } from '@nestjs/common';
-import { MailConfigModule } from 'src/config/mail/config.module';
-import { MailConfigService } from 'src/config/mail/config.service';
+import { MailerModule } from "@nestjs-modules/mailer";
+import { Module } from "@nestjs/common";
+import { MailConfigModule } from "src/config/mail/config.module";
+import { MailConfigService } from "src/config/mail/config.service";
 
 /**
  * Import and provide base nodemailer related classes.

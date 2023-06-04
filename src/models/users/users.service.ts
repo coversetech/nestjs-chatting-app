@@ -1,15 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { UsersRepository } from './users.repository';
-import { HttpService } from '@nestjs/axios';
-import { LogClass } from 'src/common/decorators/log-class.decorator';
+import { Injectable } from "@nestjs/common";
+import { UsersRepository } from "./users.repository";
+import { LogClass } from "src/common/decorators/log-class.decorator";
 
 @Injectable()
 @LogClass()
 export class UsersService {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    private readonly httpService: HttpService,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   /* Email Match */
   async userEmailMatch(email: string) {
@@ -27,7 +23,7 @@ export class UsersService {
   async userNameUpdate(id: string, name: string) {
     const messageUpdate = await this.usersRepository.updateOne(
       { id },
-      { name },
+      { name }
     );
 
     return messageUpdate;
@@ -37,7 +33,7 @@ export class UsersService {
   async notificationUpdate(id: string, notification: string) {
     const messageUpdate = await this.usersRepository.updateOne(
       { id },
-      { notification },
+      { notification }
     );
     return messageUpdate;
   }
@@ -46,7 +42,7 @@ export class UsersService {
   async notificationMutedUpdate(id: string, isMuted: boolean) {
     const messageUpdate = await this.usersRepository.updateOne(
       { id },
-      { is_muted: isMuted },
+      { is_muted: isMuted }
     );
     return messageUpdate;
   }
@@ -55,7 +51,7 @@ export class UsersService {
   async profileUpdate(id: string, image: string) {
     const messageUpdate = await this.usersRepository.updateOne(
       { id },
-      { image },
+      { image }
     );
     return messageUpdate;
   }
@@ -63,7 +59,7 @@ export class UsersService {
   async userLeave(id: string) {
     const user = await this.usersRepository.updateOne(
       { id },
-      { $set: { active: 'false' } },
+      { $set: { active: "false" } }
     );
     return user;
   }

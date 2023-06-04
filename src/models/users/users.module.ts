@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './entities/user.entity';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
-import bcrypt from 'bcryptjs';
-import * as crypto from 'crypto';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { User, UserSchema } from "./entities/user.entity";
+import { UsersService } from "./users.service";
+import { UsersController } from "./users.controller";
+import bcrypt from "bcryptjs";
+import * as crypto from "crypto";
+import { UsersRepository } from "./users.repository";
 
 @Module({
   imports: [
@@ -13,8 +14,8 @@ import * as crypto from 'crypto';
         name: User.name,
         useFactory: () => {
           const schema = UserSchema;
-          schema.pre('save', async function (next) {
-            if (!this.isModified('password')) return next();
+          schema.pre("save", async function (next) {
+            if (!this.isModified("password")) return next();
 
             /* Hash the password with cost of 12 */
             this.password = await bcrypt.hash(this.password, 12);
@@ -22,8 +23,8 @@ import * as crypto from 'crypto';
             next();
           });
 
-          schema.pre('save', function (next) {
-            if (!this.isModified('password') || this.isNew) return next();
+          schema.pre("save", function (next) {
+            if (!this.isModified("password") || this.isNew) return next();
 
             this.passwordChangedAt = new Date(Date.now() - 1000);
             next();
@@ -31,17 +32,17 @@ import * as crypto from 'crypto';
 
           schema.methods.correctPassword = async function (
             candidatePassword: string,
-            userPassword: string,
+            userPassword: string
           ) {
             return await bcrypt.compare(candidatePassword, userPassword);
           };
 
           schema.methods.changedPasswordAfter = function (
-            JWTTimestamp: number,
+            JWTTimestamp: number
           ) {
             if (this.passwordChangedAt) {
               const changedTimestamp = parseInt(
-                this.passwordChangedAt.getTime(),
+                this.passwordChangedAt.getTime()
               );
               return JWTTimestamp < changedTimestamp;
             }
@@ -53,11 +54,11 @@ import * as crypto from 'crypto';
            * Reset Password
            */
           schema.methods.createPasswordResetToken = function () {
-            const resetToken = crypto.randomBytes(32).toString('hex');
+            const resetToken = crypto.randomBytes(32).toString("hex");
             this.passwordResetToken = crypto
-              .createHash('sha256')
+              .createHash("sha256")
               .update(resetToken)
-              .digest('hex');
+              .digest("hex");
             this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
             return resetToken;
           };
@@ -67,7 +68,8 @@ import * as crypto from 'crypto';
       },
     ]),
   ],
-  providers: [UsersService],
+  providers: [UsersService, UsersRepository],
+  exports: [UsersService, UsersRepository],
   controllers: [UsersController],
 })
 export class UsersModule {}

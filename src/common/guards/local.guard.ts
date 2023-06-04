@@ -1,8 +1,8 @@
-import { Strategy } from 'passport-jwt';
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { LogClass } from '../decorators/log-class.decorator';
+import { Strategy } from "passport-jwt";
+import { PassportStrategy } from "@nestjs/passport";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { AuthenticationService } from "../../authentication/authentication.service";
+import { LogClass } from "../decorators/log-class.decorator";
 
 @Injectable()
 @LogClass()

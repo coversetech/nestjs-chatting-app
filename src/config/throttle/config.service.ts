@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 /**
  * Service dealing with throttling config based operations.
  *
@@ -10,9 +10,9 @@ export class ThrottleConfigService {
   constructor(private configService: ConfigService) {}
 
   get ttl(): string {
-    return this.configService.get<string>('throttle.ttl');
+    return this.configService.get<string>("throttle.ttl");
   }
   get limit(): string {
-    return this.configService.get<string>('throttle.limit');
+    return this.configService.get<string>("throttle.limit");
   }
 }

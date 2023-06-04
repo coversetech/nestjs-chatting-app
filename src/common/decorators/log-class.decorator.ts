@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger } from "@nestjs/common";
 
 export function LogClass(): ClassDecorator {
   return (target: any) => {
@@ -7,8 +7,8 @@ export function LogClass(): ClassDecorator {
 
     methodNames.forEach((methodName: string) => {
       if (
-        methodName !== 'constructor' &&
-        typeof prototype[methodName] === 'function'
+        methodName !== "constructor" &&
+        typeof prototype[methodName] === "function"
       ) {
         const originalMethod = prototype[methodName];
 
@@ -16,8 +16,8 @@ export function LogClass(): ClassDecorator {
           const methodLogger = new Logger(target.name);
           methodLogger.log(
             `Start executing ${methodName} with arguments: ${JSON.stringify(
-              args,
-            )}`,
+              args
+            )}`
           );
 
           try {

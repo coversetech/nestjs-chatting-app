@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import validator from 'validator';
-import { ModelEntity, ModelEntitySchema } from 'src/models/model.entity';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
+import validator from "validator";
+import { ModelEntity, ModelEntitySchema } from "src/models/model.entity";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -14,22 +14,22 @@ export type UserDocument = HydratedDocument<User>;
 export class User extends ModelEntity {
   @Prop({
     type: String,
-    required: [true, 'A user must have a name'],
-    maxlength: [10, 'Username must be less than or equal to 10 characters.'],
+    required: [true, "A user must have a name"],
+    maxlength: [10, "Username must be less than or equal to 10 characters."],
   })
   name: string;
 
   @Prop({
     type: String,
-    required: [true, 'Please provide your email'],
+    required: [true, "Please provide your email"],
     unique: true,
-    validate: [validator.isEmail, 'Please provide a valid email'],
+    validate: [validator.isEmail, "Please provide a valid email"],
   })
   email: string;
 
   @Prop({
     type: String,
-    required: [true, 'Please provide a password'],
+    required: [true, "Please provide a password"],
     minlength: 8,
   })
   password: string;
@@ -48,17 +48,17 @@ export class User extends ModelEntity {
 
   @Prop({
     type: String,
-    required: [true, 'Please provide a location'],
+    required: [true, "Please provide a location"],
   })
   location: string;
 
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.Date })
   passwordChangedAt: Date;
 
   @Prop({ type: String })
   passwordResetToken: string;
 
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.Date })
   passwordResetExpires: Date;
 
   @Prop({

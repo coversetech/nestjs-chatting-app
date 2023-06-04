@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { ModelRepository } from '../../model.repository';
-import { GroupUser, GroupUserDocument } from '../entities/group-user.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { ModelRepository } from "../../model.repository";
+import { GroupUser, GroupUserDocument } from "../entities/group-user.entity";
 
 @Injectable()
 export class GroupUsersRepository extends ModelRepository<GroupUserDocument> {
   constructor(
     @InjectModel(GroupUser.name)
-    private groupUserModel: Model<GroupUserDocument>,
+    private groupUserModel: Model<GroupUserDocument>
   ) {
     super(groupUserModel);
   }
@@ -17,27 +17,27 @@ export class GroupUsersRepository extends ModelRepository<GroupUserDocument> {
     return await this.groupUserModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { id: '$contact_id' },
+          from: "users",
+          let: { id: "$contact_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$id' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$id" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       { $match: { group_id: groupsId } },
       {
         $project: {
-          unread: '$unread',
-          is_admin: '$is_admin',
-          contact_id: '$contact_id',
-          group_id: '$group_id',
-          name: '$user.name',
-          user_id: '$user._id',
+          unread: "$unread",
+          is_admin: "$is_admin",
+          contact_id: "$contact_id",
+          group_id: "$group_id",
+          name: "$user.name",
+          user_id: "$user._id",
         },
       },
     ]);
@@ -47,47 +47,47 @@ export class GroupUsersRepository extends ModelRepository<GroupUserDocument> {
     return await this.groupUserModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { id: '$contact_id' },
+          from: "users",
+          let: { id: "$contact_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$id' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$id" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       {
         $lookup: {
-          from: 'contacts',
-          let: { id: '$contact_id' },
+          from: "contacts",
+          let: { id: "$contact_id" },
           pipeline: [
             {
               $match: {
                 $expr: {
                   $and: [
-                    { $eq: ['$user_id', '$$id'] },
-                    { $eq: ['$created_by', userId] },
+                    { $eq: ["$user_id", "$$id"] },
+                    { $eq: ["$created_by", userId] },
                   ],
                 },
               },
             },
           ],
-          as: 'contacts',
+          as: "contacts",
         },
       },
       { $match: { group_id: groupsId } },
       {
         $project: {
-          unread: '$unread',
-          is_admin: '$is_admin',
-          contact_id: '$contact_id',
-          group_id: '$group_id',
-          name: '$user.name',
-          user_id: '$user._id',
-          contactName: '$contacts.name',
+          unread: "$unread",
+          is_admin: "$is_admin",
+          contact_id: "$contact_id",
+          group_id: "$group_id",
+          name: "$user.name",
+          user_id: "$user._id",
+          contactName: "$contacts.name",
         },
       },
     ]);
@@ -97,29 +97,29 @@ export class GroupUsersRepository extends ModelRepository<GroupUserDocument> {
     return await this.groupUserModel.aggregate([
       {
         $lookup: {
-          from: 'groups',
-          let: { id: '$group_id' },
+          from: "groups",
+          let: { id: "$group_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$id' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$id" }] },
               },
             },
           ],
-          as: 'group',
+          as: "group",
         },
       },
-      { $match: { 'group.name': { $regex: name, $options: 'i' } } },
+      { $match: { "group.name": { $regex: name, $options: "i" } } },
       { $match: { contact_id: userId } },
       {
         $project: {
           /*   userId: '$user_id', */
-          name: '$group.name',
-          description: '$group.description',
-          userId: '$group.userId',
-          group_id: '$group._id',
-          unread: '$unread',
-          contact_id: '$contact_id',
+          name: "$group.name",
+          description: "$group.description",
+          userId: "$group.userId",
+          group_id: "$group._id",
+          unread: "$unread",
+          contact_id: "$contact_id",
         },
       },
     ]);
@@ -129,28 +129,28 @@ export class GroupUsersRepository extends ModelRepository<GroupUserDocument> {
     return await this.groupUserModel.aggregate([
       {
         $lookup: {
-          from: 'groups',
-          let: { id: '$group_id' },
+          from: "groups",
+          let: { id: "$group_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$id' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$id" }] },
               },
             },
           ],
-          as: 'group',
+          as: "group",
         },
       },
       { $match: { contact_id: userId } },
       {
         $project: {
           /* userId: '$user_id', */
-          name: '$group.name',
-          description: '$group.description',
-          userId: '$group.userId',
-          group_id: '$group._id',
-          unread: '$unread',
-          contact_id: '$contact_id',
+          name: "$group.name",
+          description: "$group.description",
+          userId: "$group.userId",
+          group_id: "$group._id",
+          unread: "$unread",
+          contact_id: "$contact_id",
         },
       },
     ]);

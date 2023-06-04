@@ -1,8 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Group } from './group.entity';
-import { Contact } from 'src/models/contacts/entities/contact.entity';
-import { ModelEntity, ModelEntitySchema } from 'src/models/model.entity';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
+import { Group } from "./group.entity";
+import { Contact } from "src/models/contacts/entities/contact.entity";
+import { ModelEntity, ModelEntitySchema } from "src/models/model.entity";
 
 export type GroupUserDocument = HydratedDocument<GroupUser>;
 
@@ -15,12 +15,12 @@ export type GroupUserDocument = HydratedDocument<GroupUser>;
 export class GroupUser extends ModelEntity {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Contact',
+    ref: "Contact",
     required: true,
   })
   contactId: Contact;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Group", required: true })
   groupId: Group;
 
   @Prop({ type: Number, default: 0 })

@@ -1,8 +1,8 @@
-import * as Joi from '@hapi/joi';
-import { Module } from '@nestjs/common';
-import configuration from './configuration';
-import { AppConfigService } from './config.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from "@hapi/joi";
+import { Module } from "@nestjs/common";
+import configuration from "./configuration";
+import { AppConfigService } from "./config.service";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 /**
  * Import and provide app configuration related classes.
  *
@@ -13,11 +13,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema: Joi.object({
-        APP_NAME: Joi.string().default('MyApp'),
+        APP_NAME: Joi.string().default("MyApp"),
         APP_ENV: Joi.string()
-          .valid('development', 'production', 'test', 'provision')
-          .default('development'),
-        APP_URL: Joi.string().default('http://my-app.test'),
+          .valid("development", "production", "test", "provision")
+          .default("development"),
+        APP_URL: Joi.string().default("http://my-app.test"),
         APP_PORT: Joi.number().default(9000),
         MEDIA_FILE_SIZE: Joi.number().default(2097152),
       }),

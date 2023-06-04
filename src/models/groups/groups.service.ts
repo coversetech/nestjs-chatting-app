@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { LogClass } from 'src/common/decorators/log-class.decorator';
-import { GroupsRepository } from './repositories/groups.repository';
-import { GroupUsersRepository } from './repositories/group-users.repository';
-import { GroupMessagesRepository } from './repositories/group-messages.repository';
-import { HttpService } from '@nestjs/axios';
+import { Injectable } from "@nestjs/common";
+import { LogClass } from "src/common/decorators/log-class.decorator";
+import { GroupsRepository } from "./repositories/groups.repository";
+import { GroupUsersRepository } from "./repositories/group-users.repository";
+import { GroupMessagesRepository } from "./repositories/group-messages.repository";
 
 @Injectable()
 @LogClass()
@@ -11,8 +10,7 @@ export class GroupsService {
   constructor(
     private readonly groupsRepository: GroupsRepository,
     private readonly groupMessagesRepository: GroupMessagesRepository,
-    private readonly groupUsersRepository: GroupUsersRepository,
-    private readonly httpService: HttpService,
+    private readonly groupUsersRepository: GroupUsersRepository
   ) {}
 
   /***********  GROUP USERS  ************/
@@ -27,7 +25,7 @@ export class GroupsService {
   async groupContactsList(groupsId: string, userId: string) {
     const contactList = await this.groupUsersRepository.getGroupContactList(
       groupsId,
-      userId,
+      userId
     );
     return contactList;
   }
@@ -36,7 +34,7 @@ export class GroupsService {
   async searchGroupData(name: string, userId: string) {
     const contactList = await this.groupUsersRepository.searchGroupData(
       name,
-      userId,
+      userId
     );
     return contactList;
   }
@@ -53,11 +51,11 @@ export class GroupsService {
   async updateUnreadGroupUser(
     groupsId: string,
     contactId: string,
-    unread: number,
+    unread: number
   ) {
     const messageUpdate = await this.groupUsersRepository.updateMany(
       { group_id: groupsId, contact_id: contactId },
-      { unread },
+      { unread }
     );
     return messageUpdate;
   }
@@ -65,7 +63,7 @@ export class GroupsService {
   /* Contact Detail get By User Id */
   async contactListByUser(userId: string) {
     const contactList = await this.groupUsersRepository.getContactListByUser(
-      userId,
+      userId
     );
     return contactList;
   }
@@ -74,11 +72,11 @@ export class GroupsService {
   async updateUnreadGroupMessage(
     groupsId: string,
     userId: string,
-    unread: number,
+    unread: number
   ) {
     const messageUpdate = await this.groupUsersRepository.updateMany(
       { group_id: groupsId, contact_id: userId },
-      { unread },
+      { unread }
     );
     return messageUpdate;
   }
@@ -87,7 +85,7 @@ export class GroupsService {
   async updateAllUnreadGroupMessage(groupsId: string, unread: number) {
     const messageUpdate = await this.groupUsersRepository.updateMany(
       { group_id: groupsId },
-      { unread },
+      { unread }
     );
     return messageUpdate;
   }
@@ -131,7 +129,7 @@ export class GroupsService {
   async groupsMessage(id: string, startm = 0) {
     const groupMessage = await this.groupMessagesRepository.getGroupMessages(
       id,
-      startm,
+      startm
     );
     return groupMessage;
   }
@@ -140,7 +138,7 @@ export class GroupsService {
   async groupMessageUpdate(id: string, message: string) {
     const messageUpdate = await this.groupMessagesRepository.updateOne(
       { id },
-      { message },
+      { message }
     );
     return messageUpdate;
   }
@@ -195,7 +193,7 @@ export class GroupsService {
   async groupNameUpdate(id: string, name: string) {
     const messageUpdate = await this.groupsRepository.updateOne(
       { id },
-      { name },
+      { name }
     );
     return messageUpdate;
   }

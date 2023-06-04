@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-export default registerAs('mail', () => ({
+import { registerAs } from "@nestjs/config";
+export default registerAs("mail", () => ({
   username: process.env.EMAIL_USERNAME,
   password: process.env.EMAIL_PASSWORD,
   host: process.env.EMAIL_HOST,

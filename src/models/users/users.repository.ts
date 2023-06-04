@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { User, UserDocument } from './entities/user.entity';
-import { ModelRepository } from '../model.repository';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { User, UserDocument } from "./entities/user.entity";
+import { ModelRepository } from "../model.repository";
 
 @Injectable()
 export class UsersRepository extends ModelRepository<UserDocument> {
@@ -15,6 +15,6 @@ export class UsersRepository extends ModelRepository<UserDocument> {
   }
 
   async findByEmailAndGetPassword(email: string): Promise<UserDocument | null> {
-    return await this.userModel.findOne({ email }).select('+password');
+    return await this.userModel.findOne({ email }).select("+password");
   }
 }

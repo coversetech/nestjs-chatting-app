@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { ThrottleConfigModule } from 'src/config/throttle/config.module';
-import { ThrottleConfigService } from 'src/config/throttle/config.service';
+import { Module } from "@nestjs/common";
+import { ThrottlerModule } from "@nestjs/throttler";
+import { ThrottleConfigModule } from "src/config/throttle/config.module";
+import { ThrottleConfigService } from "src/config/throttle/config.service";
 
 /**
  * Import and provide base throttling related classes.

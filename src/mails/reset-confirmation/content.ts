@@ -4,9 +4,9 @@ export const resetConfirmationContent = (
   firstName: string,
   resetTokenUrl: string,
   expirationTime: string,
-  companyName = 'Sample',
-  supportEmail = 'support@example.com',
-  supportPhone = '+1234567890',
+  companyName = "Sample",
+  supportEmail = "support@example.com",
+  supportPhone = "+1234567890"
 ): string => {
   return `
   <p>Dear ${firstName},</p>

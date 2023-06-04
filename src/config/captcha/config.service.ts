@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 /**
  * Service dealing with captcha config based operations.
  *
@@ -10,9 +10,9 @@ export class CaptchaConfigService {
   constructor(private configService: ConfigService) {}
 
   get secret(): string {
-    return this.configService.get<string>('captcha.secret');
+    return this.configService.get<string>("captcha.secret");
   }
   get siteKey(): string {
-    return this.configService.get<string>('captcha.siteKey');
+    return this.configService.get<string>("captcha.siteKey");
   }
 }

@@ -1,10 +1,10 @@
-import { Logger } from '@nestjs/common';
+import { Logger } from "@nestjs/common";
 
 export function LogMethod(logger?: Logger): MethodDecorator {
   return (
     target: any,
     key: string | symbol,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) => {
     const originalMethod = descriptor.value;
 
@@ -12,8 +12,8 @@ export function LogMethod(logger?: Logger): MethodDecorator {
       const methodLogger = logger || new Logger(target.constructor.name);
       methodLogger.log(
         `Start executing ${key.toString()} with arguments: ${JSON.stringify(
-          args,
-        )}`,
+          args
+        )}`
       );
 
       try {

@@ -1,11 +1,11 @@
-import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable, Logger } from '@nestjs/common';
-import { Address } from 'nodemailer/lib/mailer';
+import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable, Logger } from "@nestjs/common";
+import { Address } from "nodemailer/lib/mailer";
 
 export enum NotificationType {
-  Verification = 'verification',
-  Confirmation = 'confirmation',
-  Notice = 'notice',
+  Verification = "verification",
+  Confirmation = "confirmation",
+  Notice = "notice",
 }
 
 @Injectable()
@@ -20,7 +20,7 @@ export class MailerHelper {
     message: string,
     from?: string | Address,
     isHtml = true,
-    type?: NotificationType,
+    type?: NotificationType
   ): Promise<void> {
     await this.mailerService
       .sendMail({

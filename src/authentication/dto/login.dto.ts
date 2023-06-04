@@ -1,5 +1,5 @@
 export class SignInDTO {
   email: string;
   password: string;
-  'g-recaptcha-response': string;
+  "g-recaptcha-response": string;
 }

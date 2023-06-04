@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-export default registerAs('mongo', () => ({
+import { registerAs } from "@nestjs/config";
+export default registerAs("mongo", () => ({
   database: process.env.DATABASE,
   password: process.env.DATABASE_PASSWORD,
   username: process.env.DATABASE_USERNAME,

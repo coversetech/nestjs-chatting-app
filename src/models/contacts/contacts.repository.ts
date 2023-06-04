@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Contact, ContactDocument } from './entities/contact.entity';
-import { ModelRepository } from '../model.repository';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Contact, ContactDocument } from "./entities/contact.entity";
+import { ModelRepository } from "../model.repository";
 
 @Injectable()
 export class ContactsRepository extends ModelRepository<ContactDocument> {
   constructor(
-    @InjectModel(Contact.name) private contactModel: Model<ContactDocument>,
+    @InjectModel(Contact.name) private contactModel: Model<ContactDocument>
   ) {
     super(contactModel);
   }
@@ -16,48 +16,48 @@ export class ContactsRepository extends ModelRepository<ContactDocument> {
     return await this.contactModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { userId: '$user_id' },
+          from: "users",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$userId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$userId" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       {
         $lookup: {
-          from: 'messages',
-          let: { userId: '$user_id' },
+          from: "messages",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$sender_id', '$$userId'] },
+                $expr: { $eq: ["$sender_id", "$$userId"] },
               },
             },
             { $sort: { _id: -1 } },
             { $limit: 1 },
           ],
-          as: 'message',
+          as: "message",
         },
       },
       { $sort: { name: 1 } },
       { $match: { created_by: userId } },
       {
         $project: {
-          name: '$name',
-          email: '$email',
-          user_id: '$user_id',
-          created_by: '$created_by',
-          userImg: '$user.image',
-          createdAt: '$user.createdAt',
-          location: '$user.location',
-          message: '$message.message',
-          file_upload: '$message.file_upload',
-          created_at: '$message.createdAt',
+          name: "$name",
+          email: "$email",
+          user_id: "$user_id",
+          created_by: "$created_by",
+          userImg: "$user.image",
+          createdAt: "$user.createdAt",
+          location: "$user.location",
+          message: "$message.message",
+          file_upload: "$message.file_upload",
+          created_at: "$message.createdAt",
         },
       },
     ]);
@@ -67,49 +67,49 @@ export class ContactsRepository extends ModelRepository<ContactDocument> {
     return await this.contactModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { userId: '$user_id' },
+          from: "users",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$userId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$userId" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       {
         $lookup: {
-          from: 'messages',
-          let: { userId: '$user_id' },
+          from: "messages",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$sender_id', '$$userId'] },
+                $expr: { $eq: ["$sender_id", "$$userId"] },
               },
             },
             { $sort: { _id: -1 } },
             { $limit: 1 },
           ],
-          as: 'message',
+          as: "message",
         },
       },
       { $sort: { name: 1 } },
-      { $match: { name: { $regex: name, $options: 'i' } } },
+      { $match: { name: { $regex: name, $options: "i" } } },
       { $match: { created_by: userId } },
       {
         $project: {
-          name: '$name',
-          email: '$email',
-          user_id: '$user_id',
-          created_by: '$created_by',
-          userImg: '$user.image',
-          createdAt: '$user.createdAt',
-          location: '$user.location',
-          message: '$message.message',
-          file_upload: '$message.file_upload',
-          created_at: '$message.createdAt',
+          name: "$name",
+          email: "$email",
+          user_id: "$user_id",
+          created_by: "$created_by",
+          userImg: "$user.image",
+          createdAt: "$user.createdAt",
+          location: "$user.location",
+          message: "$message.message",
+          file_upload: "$message.file_upload",
+          created_at: "$message.createdAt",
         },
       },
     ]);
@@ -119,50 +119,50 @@ export class ContactsRepository extends ModelRepository<ContactDocument> {
     return await this.contactModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { userId: '$user_id' },
+          from: "users",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$userId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$userId" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       {
         $lookup: {
-          from: 'messages',
-          let: { userId: '$user_id' },
+          from: "messages",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$unread', '0'] },
+                $expr: { $eq: ["$unread", "0"] },
               },
             },
             {
               $match: {
-                $expr: { $eq: ['$sender_id', '$$userId'] },
+                $expr: { $eq: ["$sender_id", "$$userId"] },
               },
             },
           ],
-          as: 'msg',
+          as: "msg",
         },
       },
       { $sort: { msg: -1 } },
       { $match: { created_by: userId } },
       {
         $project: {
-          name: '$name',
-          email: '$email',
-          user_id: '$user_id',
-          created_by: '$created_by',
-          userImg: '$user.image',
-          createdAt: '$user.createdAt',
-          location: '$user.location',
-          unreadMsg: '$msg.unread',
-          last_msg_date: '$last_msg_date',
+          name: "$name",
+          email: "$email",
+          user_id: "$user_id",
+          created_by: "$created_by",
+          userImg: "$user.image",
+          createdAt: "$user.createdAt",
+          location: "$user.location",
+          unreadMsg: "$msg.unread",
+          last_msg_date: "$last_msg_date",
         },
       },
     ]);
@@ -172,29 +172,29 @@ export class ContactsRepository extends ModelRepository<ContactDocument> {
     return await this.contactModel.aggregate([
       {
         $lookup: {
-          from: 'users',
-          let: { userId: '$user_id' },
+          from: "users",
+          let: { userId: "$user_id" },
           pipeline: [
             {
               $match: {
-                $expr: { $eq: ['$_id', { $toObjectId: '$$userId' }] },
+                $expr: { $eq: ["$_id", { $toObjectId: "$$userId" }] },
               },
             },
           ],
-          as: 'user',
+          as: "user",
         },
       },
       { $match: { user_id: userId } },
       { $match: { created_by: createdBy } },
       {
         $project: {
-          name: '$name',
-          email: '$email',
-          user_id: '$user_id',
-          created_by: '$created_by',
-          userImg: '$user.image',
-          createdAt: '$user.createdAt',
-          location: '$user.location',
+          name: "$name",
+          email: "$email",
+          user_id: "$user_id",
+          created_by: "$created_by",
+          userImg: "$user.image",
+          createdAt: "$user.createdAt",
+          location: "$user.location",
         },
       },
     ]);

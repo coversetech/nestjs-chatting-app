@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 /**
  * Service dealing with jwt config based operations.
  *
@@ -10,12 +10,12 @@ export class JwtConfigService {
   constructor(private configService: ConfigService) {}
 
   get secret(): string {
-    return this.configService.get<string>('jwt.secret');
+    return this.configService.get<string>("jwt.secret");
   }
   get expiresIn(): string {
-    return this.configService.get<string>('jwt.expiresIn');
+    return this.configService.get<string>("jwt.expiresIn");
   }
   get cookieExpiresIn(): string {
-    return this.configService.get<string>('jwt.cookieExpiresIn');
+    return this.configService.get<string>("jwt.cookieExpiresIn");
   }
 }

@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from 'src/models/users/entities/user.entity';
-import { ModelEntity, ModelEntitySchema } from 'src/models/model.entity';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
+import { User } from "src/models/users/entities/user.entity";
+import { ModelEntity, ModelEntitySchema } from "src/models/model.entity";
 
 export type MessageDocument = HydratedDocument<Message>;
 
@@ -12,10 +12,10 @@ export type MessageDocument = HydratedDocument<Message>;
   },
 })
 export class Message extends ModelEntity {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true })
   senderId: User;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true })
   receiverId: User;
 
   @Prop({

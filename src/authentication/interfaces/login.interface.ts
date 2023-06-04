@@ -1,4 +1,4 @@
-import { UserDocument } from 'src/models/users/entities/user.entity';
+import { UserDocument } from "src/models/users/entities/user.entity";
 
 export interface SignInResponse {
   token: string;
